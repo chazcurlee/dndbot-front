@@ -8,6 +8,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import * as color from '@mui/material/colors'
+import styled from '@emotion/styled';
 
 
 const theme = createTheme({
@@ -43,6 +44,10 @@ const theme = createTheme({
     flexGrow: 1
   },
 })
+
+const StyledApp = styled(App)`
+  background
+`
 
 
 

@@ -57,7 +57,7 @@ export default function TemporaryDrawer() {
       <List>
         <ListItem >
             <ListItemIcon><HomeIcon/></ListItemIcon>
-            <ListItemText ><Link to='/'>Home</Link></ListItemText>
+            <ListItemText ><Link to='/home'>Home</Link></ListItemText>
         </ListItem>
         <ListItem>
             <ListItemIcon><ForumIcon/></ListItemIcon>
@@ -66,6 +66,10 @@ export default function TemporaryDrawer() {
         <ListItem>
             {/* <ListItemIcon><ForumIcon/></ListItemIcon> */}
             <ListItemText ><Link to='/new-post'>New Post</Link></ListItemText>
+        </ListItem>
+        <ListItem>
+            {/* <ListItemIcon><ForumIcon/></ListItemIcon> */}
+            <ListItemText ><Link to='/login'>Login</Link></ListItemText>
         </ListItem>
       </List>
       

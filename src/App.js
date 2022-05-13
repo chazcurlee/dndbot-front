@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import { useMemo, useState } from 'react';
 import { Container, Grid, GridDirection } from '@mui/material';
 import Home from './pages/Home';
@@ -9,6 +9,9 @@ import { Box } from '@mui/material';
 import styled from '@emotion/styled';
 import Post_Detail from './pages/Post-Detail'
 import NewPost from './pages/NewPost'
+import Login from './pages/Login'
+import { CheckSession } from './services/Auth';
+import Landing from './pages/Landing';
 
 
 
@@ -25,19 +28,38 @@ const DNDLogo = styled.img`
 
 
 const App = () => {
+  const [authenticated, toggleAuthenticated] = useState(false)
+  const [user, setUser] = useState('')
 
+  const navigate = useNavigate()
+
+
+  const checkToken = async () => {
+    const userChk = await CheckSession()
+    setUser(userChk)
+    toggleAuthenticated(true)
+  }
+
+  const handleLogOut = () => {
+    //Reset all auth related state and clear localStorage
+    setUser(null)
+    toggleAuthenticated(false);
+    localStorage.clear();
+    navigate('/home')
+  }
 
 
   return (
     
-    <div>
+    <div >
     
       <Grid container direction={'column'} spacing={2}>
 
         <Grid item xs={12}>
         <Container sx={{
           backgroundColor: 'secondary.main',
-          width: 'auto',
+          width: '100vw',
+          
           textAlign: 'center',
           margin: 0,
         }} disableGutters={true} maxWidth={false} >
@@ -70,19 +92,23 @@ const App = () => {
         <Grid item xs={20}>
         < Box sx={{
           backgroundColor: 'background.default',
-          height: 1, 
+          height: 'auto', 
           maxwidth: 'sm',
           textAlign: 'center',
           margin: 0,
-          padding: 5
+          padding: 5,
+          height: 'auto'
+          
               
-        }}>
+        }}disableGutters={true}>
 
           <Routes>
-            <Route path='/' element={<Home />} />
+            <Route path='/' element={<Landing />} />
+            <Route path='/home' element={<Home />} />
             <Route path='/forum' element={<Forum />} />
             <Route path='/forum/:id' element={<Post_Detail/>} />
             <Route path='/new-post' element={<NewPost />} />
+            <Route path='/login' element={<Login />} />
           </Routes>
             
         </Box>

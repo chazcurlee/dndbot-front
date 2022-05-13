@@ -52,7 +52,7 @@ const Forum = () => {
             }} container direction={'row'} spacing={0}>
                 {posts.map((info) => (
                     <Grid item>
-                    <div onClick={() => navPostDetail(info.user_id)}>
+                    <div onClick={() => navPostDetail(info.id)}>
                         <ForumPaper sx={{
                             maxWidth: '50vw',
                             textAlign: 'center',
