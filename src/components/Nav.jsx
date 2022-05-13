@@ -69,7 +69,7 @@ export default function TemporaryDrawer() {
         </ListItem>
         <ListItem>
             {/* <ListItemIcon><ForumIcon/></ListItemIcon> */}
-            <ListItemText ><Link to='/login'>Login</Link></ListItemText>
+            <ListItemText ><Link to='/register'>Register</Link></ListItemText>
         </ListItem>
       </List>
       

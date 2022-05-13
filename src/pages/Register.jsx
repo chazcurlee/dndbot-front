@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Login = () => {
+const Register = () => {
     const theme = useTheme()
     const [formValues, setFormValues] = useState({
         firstName: '',
@@ -19,6 +19,7 @@ const Login = () => {
         userName: '',
         password: ''
     })
+    const [pswd, setPswd] = useState('')
     const usrnameChk = []
 
     const navigate = useNavigate()
@@ -37,15 +38,21 @@ const Login = () => {
 
     }, [])
 
-    const handleSubmit = (e) => {
-        navigate('/home')
-        console.log('Testing')
+    const handleSubmit = () => {
+        // ()
+
+    }
+
+    const passwordChk = (e) => {
+
+
+
 
     }
 
     const handleChange = (e) => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value })
-        console.log(formValues)
+        
 
 
     } 
@@ -60,7 +67,7 @@ const Login = () => {
             <FormLabel color='secondary' sx={{
                 color: theme.palette.secondary.main,
                 fontSize: '3rem'
-            }} >Login</FormLabel>
+            }} >New Account Register</FormLabel>
             <FormGroup  >
 
                 <FormControl sx={{
@@ -130,4 +137,4 @@ const Login = () => {
 
 }
 
-export default Login
+export default Register

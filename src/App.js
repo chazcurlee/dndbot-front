@@ -9,9 +9,10 @@ import { Box } from '@mui/material';
 import styled from '@emotion/styled';
 import Post_Detail from './pages/Post-Detail'
 import NewPost from './pages/NewPost'
-import Login from './pages/Login'
+import Login from './pages/Register'
 import { CheckSession } from './services/Auth';
 import Landing from './pages/Landing';
+import Register from './pages/Register';
 
 
 
@@ -108,7 +109,7 @@ const App = () => {
             <Route path='/forum' element={<Forum />} />
             <Route path='/forum/:id' element={<Post_Detail/>} />
             <Route path='/new-post' element={<NewPost />} />
-            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
           </Routes>
             
         </Box>
