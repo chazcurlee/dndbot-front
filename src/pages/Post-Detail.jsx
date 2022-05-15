@@ -58,7 +58,7 @@ const Post_Detail = () => {
         if (!formTitle && !formContent){
             console.log('in')
             toggleEdit(!edit)
-            await axios.put(`/posts/${id}`, post)
+            await axios.put(`http://localhost:3001/posts/${id}`, post)
         }
         
 
@@ -81,16 +81,20 @@ const Post_Detail = () => {
                     }}>
                         <Paper sx={{
                             maxWidth: '50vw',
+                            marginBottom: '10px'
                             
                         }} >
                         <Input value={post.title} onChange={handleChange} name="title"></Input>
                         <h3>user: {username.userName}</h3>
-                        <TextField value={post.content} name='content' onChange={handleChange}/>
+                        <TextField multiline value={post.content} sx={{
+                            marginBottom: '5px',
+                            width: '40vw'
+                        }} name='content' onChange={handleChange}/>
                         </Paper>
                         {<Button onClick={() => handleSubmit()}variant='outlined' sx={{
                             color: theme.palette.primary.main,
                             backgroundColor: theme.palette.secondary.main
-                        }}>Edit</Button>}
+                        }}>Submit</Button>}
                         <Divider />
                         <Paper sx={{
                             height: 'auto',
