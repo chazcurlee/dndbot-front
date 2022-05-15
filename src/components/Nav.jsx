@@ -28,7 +28,7 @@ const MenuWrapper = styled.div`
 
 
 
-export default function TemporaryDrawer() {
+export default function TemporaryDrawer({authenticated, handleLogOut}) {
   const theme = useTheme()
   const [state, setState] = useState(false);
 
@@ -59,22 +59,31 @@ export default function TemporaryDrawer() {
             <ListItemIcon><HomeIcon/></ListItemIcon>
             <ListItemText ><Link to='/home'>Home</Link></ListItemText>
         </ListItem>
+
+        {(!authenticated)?<ListItem>
+            {/* <ListItemIcon><ForumIcon/></ListItemIcon> */}
+            <ListItemText ><Link to='/login'>Login</Link></ListItemText>
+        </ListItem>:<ListItem>
+            {/* <ListItemIcon><ForumIcon/></ListItemIcon> */}
+            <ListItemText onClick={handleLogOut}><Link to='/home'>Log Out</Link></ListItemText>
+        </ListItem>}
+
+        {(!authenticated)? <ListItem>
+            {/* <ListItemIcon><ForumIcon/></ListItemIcon> */}
+            <ListItemText ><Link to='/register'>Register</Link></ListItemText>
+        </ListItem>:null}
+
         <ListItem>
             <ListItemIcon><ForumIcon/></ListItemIcon>
             <ListItemText ><Link to='/forum'>Forum</Link></ListItemText>
         </ListItem>
-        <ListItem>
+
+        {(authenticated)? <ListItem>
             {/* <ListItemIcon><ForumIcon/></ListItemIcon> */}
             <ListItemText ><Link to='/new-post'>New Post</Link></ListItemText>
-        </ListItem>
-        <ListItem>
-            {/* <ListItemIcon><ForumIcon/></ListItemIcon> */}
-            <ListItemText ><Link to='/login'>Login</Link></ListItemText>
-        </ListItem>
-        <ListItem>
-            {/* <ListItemIcon><ForumIcon/></ListItemIcon> */}
-            <ListItemText ><Link to='/register'>Register</Link></ListItemText>
-        </ListItem>
+        </ListItem>:null}
+        
+        
       </List>
       
     </Box>

@@ -116,7 +116,8 @@ const App = () => {
             <Route path='/login' element={<Login 
             authenticated={authenticated}
             toggleAuthenticated={toggleAuthenticated}
-            user={user}/>} />
+            user={user}
+            setUser={setUser}/>} />
           </Routes>
             
         </Box>

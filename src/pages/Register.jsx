@@ -68,7 +68,7 @@ const Register = () => {
             await RegisterUser({
                 firstName: formValues.firstName,
                 lastName: formValues.lastName,
-                username: formValues.userName,
+                userName: formValues.userName,
                 password:formValues.password
               })
                 setFormValues({
@@ -122,7 +122,7 @@ const Register = () => {
     return (
         <div>
             <Collapse in={open}>
-            {(alert)? <Alert severity='error' action={<IconButton
+            {(alert)? <Alert variant="filled"  severity='error' action={<IconButton
                 aria-label='close'
                 color='inherit'
                 size='small'
