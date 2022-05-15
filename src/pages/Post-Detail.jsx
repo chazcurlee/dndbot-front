@@ -1,20 +1,26 @@
 import axios from "axios";
 import React from "react";
+import CommentForm from "../components/CommentForm";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Paper  from "@mui/material/Paper";
-import { Divider, Box, Button, ListItemSecondaryAction, TextField, Switch, FormGroup, FormControlLabel } from "@mui/material";
+import { Divider, Box, Button, ListItemSecondaryAction, TextField, Switch, FormGroup, FormControlLabel, Alert, Backdrop, IconButton, ClickAwayListener } from "@mui/material";
 import { useTheme, Input } from "@mui/material";
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 
 
 const Post_Detail = () => {
+    const navigate = useNavigate()
     const [post, setPost] = useState([])
     const [comments, setComments] = useState([])
     let [username, setUsername] = useState([])
     let [isUser, toggleIsUser] = useState(false)
     let [edit, toggleEdit] = useState(false)
+    const [deleteAlert, toggleDeleteAlert] = useState(false)
+    const [commentUpdate, toggleCommentUpdate] = useState(false)
     const [formValues, setFormValues] = useState({
         title: '',
         content: ''
@@ -48,10 +54,10 @@ const Post_Detail = () => {
             
          
 
-    }, [])
+    }, [commentUpdate])
 
     const handleSubmit = async (e) => {
-        console.log('out')
+        console.log(edit)
         const formTitle = !post.title
         const formContent = !post.content
 
@@ -59,6 +65,7 @@ const Post_Detail = () => {
             console.log('in')
             toggleEdit(!edit)
             await axios.put(`http://localhost:3001/posts/${id}`, post)
+            console.log(edit)
         }
         
 
@@ -74,6 +81,8 @@ const Post_Detail = () => {
     const handleDelete = async () => {
 
         await axios.delete(`http://localhost:3001/posts/${id}`)
+        navigate('/forum')
+        
 
 
     }
@@ -84,11 +93,13 @@ const Post_Detail = () => {
         <div>
             {(edit)?(
                 <Box sx={{
-                    height: '100%'
+                    height: '100%',
+                    
                     }}>
                         <Paper sx={{
                             maxWidth: '50vw',
-                            marginBottom: '10px'
+                            marginBottom: '10px',
+                            
                             
                         }} >
                         <Input value={post.title} onChange={handleChange} name="title"></Input>
@@ -97,16 +108,17 @@ const Post_Detail = () => {
                             marginBottom: '5px',
                             width: '40vw'
                         }} name='content' onChange={handleChange}/>
-                        </Paper>
                         <FormGroup>
                             <FormControlLabel sx={{
                                 color: theme.palette.secondary.main
-                            }} control={<Switch onChange={handleSubmit}variant='outlined' sx={{
+                            }} control={<Switch onChange={()=>handleSubmit()}variant='outlined' checked={edit} sx={{
                             color: theme.palette.secondary.main,
                         
                             }} color='secondary' />} labelPlacement='start' label='Submit'/>
                         
                         </FormGroup>
+                        </Paper>
+                        
 
                         
                         <Divider />
@@ -114,13 +126,28 @@ const Post_Detail = () => {
                             height: 'auto',
                             maxWidth: '50vw'
                         }}>
+                            <CommentForm postId={id} toggleCommentUpdate={toggleCommentUpdate}/>
                             <h4>{comments.content}</h4>
                         </Paper>
                     </Box>
                 ):(
                 <Box sx={{
-                height: '100%'
+                height: '100%',
+                
                 }}>
+                    <Backdrop onClick={()=>toggleDeleteAlert(!deleteAlert)} open={deleteAlert}>
+                        <Paper sx={{
+                            height: '30vh',
+                            width: '30vw',
+                            
+                        }}>
+                            <h1>Are you sure you want to delete?</h1><br />
+                            
+                            <Button onClick={handleDelete} variant='contained' color='success' sx={{margin:'10px'}}><CheckIcon /></Button>
+                            
+                            <Button onClick={() =>toggleDeleteAlert(false)} variant='contained' color='error'sx={{margin:'10px'}}><CloseIcon /></Button>
+                        </Paper>
+                    </Backdrop>
                     <Paper sx={{
                         maxWidth: '50vw',
                         
@@ -128,7 +155,6 @@ const Post_Detail = () => {
                     <h1>{post.title}</h1>
                     <h3>user: {username.userName}</h3>
                     <p>{post.content}</p>
-                    </Paper>
                     <FormGroup>
                             <FormControlLabel sx={{
                                 color: theme.palette.secondary.main
@@ -139,15 +165,18 @@ const Post_Detail = () => {
                     
                     </FormGroup>
 
-                    <Button onClick={() => handleDelete()}variant='outlined' sx={{
+                    {(!deleteAlert)?<Button onClick={() => toggleDeleteAlert(!deleteAlert)}variant='outlined' sx={{
                             color: theme.palette.primary.main,
                             backgroundColor: theme.palette.secondary.main
-                    }}>Delete</Button>
+                    }}>Delete</Button>:null}
+                    </Paper>
+                    
                     <Divider />
                     <Paper sx={{
                         height: 'auto',
                         maxWidth: '50vw'
                     }}>
+                        <CommentForm post={post} toggleCommentUpdate={toggleCommentUpdate}/>
                         <h4>{comments.content}</h4>
                     </Paper>
                 </Box>
@@ -175,6 +204,7 @@ const Post_Detail = () => {
             height: 'auto',
             maxWidth: '50vw'
         }}>
+            <CommentForm />
             <h4>{comments.content}</h4>
         </Paper>
         </Box>
