@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Paper  from "@mui/material/Paper";
-import { Divider, Box, Button, ListItemSecondaryAction, TextField } from "@mui/material";
+import { Divider, Box, Button, ListItemSecondaryAction, TextField, Switch, FormGroup, FormControlLabel } from "@mui/material";
 import { useTheme, Input } from "@mui/material";
 
 
@@ -70,6 +70,13 @@ const Post_Detail = () => {
         setPost({ ...post, [e.target.name]: e.target.value })
 
     }
+
+    const handleDelete = async () => {
+
+        await axios.delete(`http://localhost:3001/posts/${id}`)
+
+
+    }
     
    
 
@@ -91,10 +98,17 @@ const Post_Detail = () => {
                             width: '40vw'
                         }} name='content' onChange={handleChange}/>
                         </Paper>
-                        {<Button onClick={() => handleSubmit()}variant='outlined' sx={{
-                            color: theme.palette.primary.main,
-                            backgroundColor: theme.palette.secondary.main
-                        }}>Submit</Button>}
+                        <FormGroup>
+                            <FormControlLabel sx={{
+                                color: theme.palette.secondary.main
+                            }} control={<Switch onChange={handleSubmit}variant='outlined' sx={{
+                            color: theme.palette.secondary.main,
+                        
+                            }} color='secondary' />} labelPlacement='start' label='Submit'/>
+                        
+                        </FormGroup>
+
+                        
                         <Divider />
                         <Paper sx={{
                             height: 'auto',
@@ -115,10 +129,20 @@ const Post_Detail = () => {
                     <h3>user: {username.userName}</h3>
                     <p>{post.content}</p>
                     </Paper>
-                    {<Button onClick={() => toggleEdit(!edit)}variant='outlined' sx={{
-                        color: theme.palette.primary.main,
-                        backgroundColor: theme.palette.secondary.main
-                    }}>Edit</Button>}
+                    <FormGroup>
+                            <FormControlLabel sx={{
+                                color: theme.palette.secondary.main
+                            }} control={<Switch onChange={() =>toggleEdit(!edit)}variant='outlined' sx={{
+                                color: theme.palette.secondary.main,
+                                }} />
+                            } color='secondary' labelPlacement='start' label='Edit' />
+                    
+                    </FormGroup>
+
+                    <Button onClick={() => handleDelete()}variant='outlined' sx={{
+                            color: theme.palette.primary.main,
+                            backgroundColor: theme.palette.secondary.main
+                    }}>Delete</Button>
                     <Divider />
                     <Paper sx={{
                         height: 'auto',
