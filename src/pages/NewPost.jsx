@@ -10,6 +10,8 @@ import CloseIcon from '@mui/icons-material/Close'
 
 const NewPost = ({user}) => {
     const theme = useTheme()
+    const navigate = useNavigate()
+
     const [formValues, setFormValues] = useState({
         user_id: `${localStorage.getItem('user')}`,
         title: '',
@@ -24,7 +26,8 @@ const NewPost = ({user}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const post = await axios.post(`/posts/${formValues.user_id}`, formValues)
+        await axios.post(`http://localhost:3001/posts/${formValues.user_id}`, formValues)
+        navigate('/forum')
 
     }
 
@@ -63,7 +66,15 @@ const NewPost = ({user}) => {
 
             </FormControl>
 
-
+            <Button onClick={handleSubmit}  variant='contained'color="secondary" 
+                    disabled={
+                        !formValues.title ||
+                        !formValues.content 
+                        } sx={{
+                    color: theme.palette.text.secondary,
+                    marginTop: '15px',
+                    maxWidth: '20vw'
+                }}>Post</Button>
 
             </FormGroup>
 

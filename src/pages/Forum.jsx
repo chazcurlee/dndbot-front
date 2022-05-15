@@ -51,7 +51,11 @@ const Forum = () => {
                 justifyContent: 'center'
             }} container direction={'row'} spacing={0}>
                 {posts.map((info) => (
-                    <Grid item>
+                    <Grid sx={{
+                        width: '30vw',
+                        margin: '1vw',
+                        
+                    }} item>
                     <div onClick={() => navPostDetail(info.id)}>
                         <ForumPaper sx={{
                             maxWidth: '50vw',

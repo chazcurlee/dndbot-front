@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Routes, useNavigate } from 'react-router-dom'
-import { useMemo, useState } from 'react';
-import { Container, Grid, GridDirection } from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
+import { Container, Grid, GridDirection, ListItemSecondaryAction } from '@mui/material';
 import Home from './pages/Home';
 import Forum from './pages/Forum';
 import Nav from './components/Nav'
@@ -43,31 +43,45 @@ const App = () => {
 
   const handleLogOut = () => {
     //Reset all auth related state and clear localStorage
+    
     setUser(null)
     toggleAuthenticated(false);
     localStorage.clear();
     navigate('/home')
   }
 
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+
+    if(token) {
+      checkToken()
+    }
+
+  }, [])
+
 
   return (
     
-    <div >
+    <div className='App'>
     
-      <Grid container direction={'column'} spacing={2}>
+      <Box display="grid" gridTemplateRows='repeat(2, auto)'>
 
-        <Grid item xs={12}>
-          <Container sx={{
+        <Box sx={{
+          backgroundColor: 'secondary.main'
+        }} gridRow='span 1' display="grid" gridTemplateColumns='3, 1fr'>
+          {/* <Container  sx={{
             backgroundColor: 'secondary.main',
             width: '100vw',
             
             textAlign: 'center',
             margin: 0,
-          }} disableGutters={true} maxWidth={false} >
+          }} disableGutters={true} maxWidth={false} > */}
 
-            <Grid container direction={'row'} columns={3} spacing={3}>
+            {/* <Box > */}
 
-              <Grid item lg={1}>
+              <Box sx={{
+                gridColumnStart: '1'
+              }} gridColumn='span 1'>
                 <Container sx={{
                   padding: 0
                 }}>
@@ -76,53 +90,62 @@ const App = () => {
                   user={user}
                   handleLogOut={handleLogOut}/>
                 </Container>
-              </Grid>
+              </Box>
 
-              <Grid item lg={1}>
+              <Box sx={{
+                gridColumnStart: '2'
+              }} gridColumn='span 1'>
                 <Container >
                   <DNDLogo alt='DND Logo' src="https://tinyurl.com/2uhtp9yc"/>
                 </Container>
-              </Grid>
+              </Box>
 
-              <Grid item lg={1}>
+              <Box sx={{
+                gridColumnStart: '3'
+              }} gridColumn='span 1'>
                 <Container >
                   <Title>DNDbot</Title>
                 </Container>
-              </Grid>
+              </Box>
 
-            </Grid>
-          </Container>
-        </Grid>
-        <Grid item xs={20}>
-        < Box sx={{
-          backgroundColor: 'background.default',
-          height: 'auto', 
-          maxwidth: 'sm',
-          textAlign: 'center',
-          margin: 0,
-          padding: 5,
-          height: 'auto'
-          
-              
-        }}disableGutters={true}>
-
-          <Routes>
-            <Route path='/' element={<Landing />} />
-            <Route path='/home' element={<Home />} />
-            <Route path='/forum' element={<Forum />} />
-            <Route path='/forum/:id' element={<Post_Detail/>} />
-            <Route path='/new-post' element={<NewPost />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/login' element={<Login 
-            authenticated={authenticated}
-            toggleAuthenticated={toggleAuthenticated}
-            user={user}
-            setUser={setUser}/>} />
-          </Routes>
-            
+            {/* </Box> */}
+          {/* </Container> */}
         </Box>
-        </Grid>
-      </Grid>
+        <Box gridRow='span 1' display="grid" gridTemplateColumns='3, auto'>
+          < Box sx={{
+            backgroundColor: 'background.default',
+            height: 'auto', 
+            maxwidth: 'sm',
+            textAlign: 'center',
+            margin: 0,
+            padding: 5,
+            height: 'auto',
+            gridColumnStart: '2',
+            height: 'auto'
+            
+                
+          }}disableGutters={true} >
+
+            <Routes>
+              <Route path='/' element={<Landing />} />
+              <Route path='/home' element={<Home />} />
+              <Route path='/forum' element={<Forum />} />
+              <Route path='/forum/:id' element={<Post_Detail/>} />
+              <Route path='/new-post' element={<NewPost user={user}/>} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/login' element={<Login 
+              authenticated={authenticated}
+              toggleAuthenticated={toggleAuthenticated}
+              user={user}
+              setUser={setUser}/>} />
+            </Routes>
+              
+          </Box>
+          <Box sx={{
+            gridColumnStart: '3'
+          }}></Box>
+        </Box>
+      </Box>
     </div>
       
     
