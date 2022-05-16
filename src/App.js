@@ -21,6 +21,8 @@ import Register from './pages/Register';
 
 const Title = styled.h1`
   margin: 0;
+  justifySelf: bottom;
+  fontSize: 20rem
   
 `
 const DNDLogo = styled.img`
@@ -95,7 +97,7 @@ const App = () => {
               <Box sx={{
                 gridColumnStart: '2'
               }} gridColumn='span 1'>
-                <Container >
+                <Container sx={{}}>
                   <DNDLogo alt='DND Logo' src="https://tinyurl.com/2uhtp9yc"/>
                 </Container>
               </Box>
@@ -103,8 +105,8 @@ const App = () => {
               <Box sx={{
                 gridColumnStart: '3'
               }} gridColumn='span 1'>
-                <Container >
-                  <Title>DNDbot</Title>
+                <Container sx={{fontSize: '2em'}} >
+                  <Title >DNDbot</Title>
                 </Container>
               </Box>
 

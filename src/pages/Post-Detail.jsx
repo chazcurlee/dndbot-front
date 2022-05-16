@@ -87,7 +87,7 @@ const Post_Detail = () => {
 
     }
     
-   
+   console.log(comments)
 
     return  (parseInt(localStorage.getItem('user'))===username.id)?(
         <div>
@@ -126,8 +126,13 @@ const Post_Detail = () => {
                             height: 'auto',
                             maxWidth: '50vw'
                         }}>
-                            <CommentForm postId={id} toggleCommentUpdate={toggleCommentUpdate}/>
-                            <h4>{comments.content}</h4>
+                            <CommentForm commentUpdate={commentUpdate} postId={id} toggleCommentUpdate={toggleCommentUpdate}/>
+                            {comments.map((comment)=> (
+                                <div>
+                                <h4>{comment.content}</h4>
+                                <Divider />
+                                </div>
+                            ))}
                         </Paper>
                     </Box>
                 ):(
@@ -176,8 +181,10 @@ const Post_Detail = () => {
                         height: 'auto',
                         maxWidth: '50vw'
                     }}>
-                        <CommentForm post={post} toggleCommentUpdate={toggleCommentUpdate}/>
-                        <h4>{comments.content}</h4>
+                        <CommentForm commentUpdate={commentUpdate} post={post} toggleCommentUpdate={toggleCommentUpdate}/>
+                        {comments.map((comment)=> (
+                            <h4>{comment.content}</h4>
+                        ))}
                     </Paper>
                 </Box>
                 )}
@@ -204,8 +211,11 @@ const Post_Detail = () => {
             height: 'auto',
             maxWidth: '50vw'
         }}>
-            <CommentForm />
-            <h4>{comments.content}</h4>
+            <CommentForm commentUpdate={commentUpdate} postId={id} toggleCommentUpdate={toggleCommentUpdate}/>
+            {comments.map((comment)=> (
+                <h4>{comment.content}</h4>
+            ))}
+            
         </Paper>
         </Box>
     </div>)

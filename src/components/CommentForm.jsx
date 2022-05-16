@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 
 
 
-const CommentForm = ({toggleCommentUpdate, post}) => {
+const CommentForm = ({toggleCommentUpdate, post, commentUpdate}) => {
     const theme = useTheme()
     const [comment, setComment] = useState({
         content: null
@@ -16,12 +16,15 @@ const CommentForm = ({toggleCommentUpdate, post}) => {
     const userId = localStorage.getItem('user')
 
     const handleChange = (e) => {
-        setComment(e.target.value)
+        setComment({[e.target.name]: e.target.value })
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
 
         await axios.post(`http://localhost:3001/comments/${post.user_id}/${post.id}`, comment)
+        setComment({content: null})
+        e.target.value = null
+        toggleCommentUpdate(!commentUpdate)
 
     }
 
@@ -35,7 +38,7 @@ const CommentForm = ({toggleCommentUpdate, post}) => {
 
     return (!userId)? (
     
-        <div>Test</div>
+        <div>Login to Comment or Post</div>
         
         
         
@@ -43,8 +46,8 @@ const CommentForm = ({toggleCommentUpdate, post}) => {
         <Paper sx={{marginTop: '10px', padding: '10px', paddingBottom:'5px'}}>
             <FormLabel>Leave a Comment</FormLabel>
             <FormGroup>
-                <TextField name="comment" multiline rows={4} onChange={handleChange} placeholder="Comment"></TextField>
-                <Button variant='contained' disabled={!comment.content} color='secondary' sx={{color: theme.palette.primary.main, marginTop: '5px', width: '10vw'}} >Comment</Button>
+                <TextField name="content" multiline rows={4} onChange={handleChange} placeholder="Comment"></TextField>
+                <Button variant='contained' disabled={!comment.content} color='secondary' sx={{color: theme.palette.primary.main, marginTop: '5px', width: '10vw'}} onClick={handleSubmit}>Comment</Button>
                 
             </FormGroup>
         </Paper>
