@@ -3,6 +3,7 @@ import React from "react";
 import { useTheme } from "@mui/material";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import Client from "../services/API";
 
 
 
@@ -21,7 +22,7 @@ const CommentForm = ({toggleCommentUpdate, post, commentUpdate}) => {
 
     const handleSubmit = async (e) => {
 
-        await axios.post(`http://localhost:3001/comments/${post.user_id}/${post.id}`, comment)
+        await Client.post(`/comments/${post.user_id}/${post.id}`, comment)
         setComment({content: null})
         e.target.value = null
         toggleCommentUpdate(!commentUpdate)

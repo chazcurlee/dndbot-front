@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from 'axios'
+import Client from "../services/API";
 import FormControl from '@mui/material/FormControl';
 import { Alert, Box, Button, Collapse, FormGroup, IconButton, InputLabel } from "@mui/material";
 import { FormLabel } from "@mui/material";
@@ -35,7 +35,7 @@ const Register = () => {
 
         const pullUsers = async() => {
 
-            let allUsers = await axios.get('/users')
+            let allUsers = await Client.get('/users')
             allUsers.map((x) => {
                 usrnameChk.push(x.userName)
             })

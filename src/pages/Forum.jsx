@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from 'axios'
+
 import Paper  from "@mui/material/Paper";
 import styled from "@emotion/styled";
 import {Grid, useTheme} from "@mui/material";
@@ -35,7 +35,7 @@ const Forum = () => {
     useEffect(() => {
 
         const getPosts = async () => {
-            let allPosts = await axios.get(`${Client}/posts`)
+            let allPosts = await Client.get(`/posts`)
             setPosts(allPosts.data)
         }
         getPosts()

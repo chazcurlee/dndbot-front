@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import React from "react";
 import CommentForm from "../components/CommentForm";
 import { useEffect, useState } from "react";
@@ -39,10 +39,10 @@ const Post_Detail = () => {
         const getPostDetails = async() => {
             window.scrollTo(0, 0)
 
-            const postDetails = await axios.get(`${Client}posts/${id}`)
-            const postComments = await axios.get(`${Client}/comments/${id}`)
+            const postDetails = await Client.get(`/posts/${id}`)
+            const postComments = await Client.get(`/comments/${id}`)
             let postUser = postDetails.data.user_id
-            let userInfo = await axios.get(`${Client}/users/${postUser}`)
+            let userInfo = await Client.get(`/users/${postUser}`)
 
             setPost(postDetails.data)
             setComments(postComments.data)
@@ -65,7 +65,7 @@ const Post_Detail = () => {
         if (!formTitle && !formContent){
             console.log('in')
             toggleEdit(!edit)
-            await axios.put(`${Client}/posts/${id}`, post)
+            await Client.put(`/posts/${id}`, post)
             console.log(edit)
         }
         
@@ -81,7 +81,7 @@ const Post_Detail = () => {
 
     const handleDelete = async () => {
 
-        await axios.delete(`${Client}/posts/${id}`)
+        await Client.delete(`/posts/${id}`)
         navigate('/forum')
         
 

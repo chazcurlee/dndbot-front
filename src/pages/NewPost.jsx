@@ -26,7 +26,7 @@ const NewPost = ({user}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        await axios.post(`${Client}/posts/${formValues.user_id}`, formValues)
+        await Client.post(`/posts/${formValues.user_id}`, formValues)
         navigate('/forum')
 
     }
