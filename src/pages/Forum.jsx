@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import {Grid, useTheme} from "@mui/material";
 import Divider  from "@mui/material/Divider";
 import { useNavigate } from "react-router-dom";
+import Client from "../services/API";
 
 const ForumPaper = styled(Paper)`
     backgroundColor: ${props => props.theme.palette.paper.default}
@@ -34,7 +35,7 @@ const Forum = () => {
     useEffect(() => {
 
         const getPosts = async () => {
-            let allPosts = await axios.get("http://localhost:3001/posts")
+            let allPosts = await axios.get(`${Client}/posts`)
             setPosts(allPosts.data)
         }
         getPosts()

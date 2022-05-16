@@ -8,6 +8,7 @@ import { Divider, Box, Button, ListItemSecondaryAction, TextField, Switch, FormG
 import { useTheme, Input } from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import Client from "../services/API";
 
 
 
@@ -38,10 +39,10 @@ const Post_Detail = () => {
         const getPostDetails = async() => {
             window.scrollTo(0, 0)
 
-            const postDetails = await axios.get(`http://localhost:3001/posts/${id}`)
-            const postComments = await axios.get(`http://localhost:3001/comments/${id}`)
+            const postDetails = await axios.get(`${Client}posts/${id}`)
+            const postComments = await axios.get(`${Client}/comments/${id}`)
             let postUser = postDetails.data.user_id
-            let userInfo = await axios.get(`http://localhost:3001/users/${postUser}`)
+            let userInfo = await axios.get(`${Client}/users/${postUser}`)
 
             setPost(postDetails.data)
             setComments(postComments.data)
@@ -64,7 +65,7 @@ const Post_Detail = () => {
         if (!formTitle && !formContent){
             console.log('in')
             toggleEdit(!edit)
-            await axios.put(`http://localhost:3001/posts/${id}`, post)
+            await axios.put(`${Client}/posts/${id}`, post)
             console.log(edit)
         }
         
@@ -80,7 +81,7 @@ const Post_Detail = () => {
 
     const handleDelete = async () => {
 
-        await axios.delete(`http://localhost:3001/posts/${id}`)
+        await axios.delete(`${Client}/posts/${id}`)
         navigate('/forum')
         
 

@@ -4,7 +4,7 @@ import { Alert, Box, Button, Collapse, FormGroup, IconButton, InputLabel, FormCo
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close'
-
+import Client from "../services/API";
 
 
 
@@ -26,7 +26,7 @@ const NewPost = ({user}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        await axios.post(`http://localhost:3001/posts/${formValues.user_id}`, formValues)
+        await axios.post(`${Client}/posts/${formValues.user_id}`, formValues)
         navigate('/forum')
 
     }
